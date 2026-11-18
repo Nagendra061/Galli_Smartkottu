@@ -61,10 +61,10 @@ cd backend
 - `src/shared/` — Design tokens, i18n context, auth/realtime/bootstrap hooks, REST client with offline & 401 handling, and reusable UI/form/feedback/layout components.
 - `src/portals/super-admin/`, `src/portals/smo/`, `src/portals/customer/` — Isolated portals with no cross-portal imports.
 
-## Seeded Logins (See `.env.example`)
+<!-- ## Seeded Logins (See `.env.example`)
 
 All seeded defaults can be overridden via environment variables before running `python manage.py seed_db`:
 
 - **Super Admin**: `admin@gallismartkottu.local` / `Admin@2026!`
 - **Super Market Owner**: `9876543210` (or `owner@gallifresh.local`) / `Owner@2026!` (Store slug: `galli-fresh-mart`)
-- **Customer**: `9123456789` / PIN `1234`
+- **Customer**: `9123456789` / PIN `1234` -->
