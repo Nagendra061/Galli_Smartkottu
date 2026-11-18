@@ -1,0 +1,52 @@
+:root {
+  /* Surface & Canvas (60% neutral canvas, 30% structural surfaces) */
+  --color-surface-canvas: #E6E9F9;
+  --color-surface-card: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-surface-muted: #e2e8f0;
+
+  /* Ink / Typography */
+  --color-ink-primary: #0f172a;
+  --color-ink-secondary: #475569;
+  --color-ink-muted: #64748b;
+  --color-ink-inverse: #ffffff;
+
+  /* Hairline Borders */
+  --color-border-default: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+
+  /* Brand Accent (10% accent budget - overridable per store in Customer portal) */
+  --color-accent-primary: #0f766e;
+  --color-accent-hover: #115e59;
+  --color-accent-soft: #f0fdfa;
+  --color-accent-border: #99f6e4;
+
+  /* Semantic Status Colors (always paired with explicit text labels / icons) */
+  --color-status-success-fg: #15803d;
+  --color-status-success-bg: #f0fdf4;
+  --color-status-warning-fg: #b45309;
+  --color-status-warning-bg: #fffbeb;
+  --color-status-danger-fg: #b91c1c;
+  --color-status-danger-bg: #fef2f2;
+  --color-status-info-fg: #0369a1;
+  --color-status-info-bg: #f0f9ff;
+
+  /* Typography */
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Radius & Elevation */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --shadow-card: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+  --shadow-overlay: 0 12px 32px -4px rgb(15 23 42 / 0.14);
+
+  /* Z-index layers */
+  --z-sticky: 20;
+  --z-nav: 30;
+  --z-drawer: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+}

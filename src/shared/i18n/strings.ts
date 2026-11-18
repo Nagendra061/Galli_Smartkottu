@@ -1,0 +1,50 @@
+export const DEFAULT_UI_STRINGS: Record<string, string> = {
+  // Common actions
+  'action.save': 'Save',
+  'action.cancel': 'Cancel',
+  'action.delete': 'Delete',
+  'action.archive': 'Archive',
+  'action.restore': 'Restore',
+  'action.retry': 'Retry',
+  'action.goHome': 'Go Home',
+  'action.signIn': 'Sign in',
+  'action.signOut': 'Sign out',
+  'action.confirm': 'Confirm',
+  'action.back': 'Back',
+  'action.edit': 'Edit',
+  'action.add': 'Add',
+  'action.close': 'Close',
+  'action.exportCsv': 'Export CSV',
+  'action.undo': 'Undo',
+
+  // Auth & Errors
+  'auth.sessionExpiredTitle': 'Session expired',
+  'auth.sessionExpiredBody': 'Your session has expired. Please sign in again to continue.',
+  'auth.noAccessTitle': 'No access',
+  'auth.noAccessBody': 'You do not have permission to open this page.',
+  'error.notFoundTitle': 'Page not found',
+  'error.notFoundBody': 'The link you opened does not exist or has moved.',
+  'error.genericTitle': 'Something went wrong',
+  'error.genericBody': 'An unexpected error occurred. Try again or return home.',
+  'offline.banner': 'You are offline. POS bills will be saved locally and synced once online.',
+  'offline.posSaved': 'Saved offline — will sync automatically when online',
+  'offline.posSynced': 'Offline POS bill synced',
+  'offline.posSyncFailed': 'Could not sync offline bill. Retry when connected.',
+
+  // Feedback toasts
+  'toast.saved': '{item} saved',
+  'toast.deleted': '{item} deleted',
+  'toast.archived': '{item} archived',
+  'toast.restored': '{item} restored',
+  'toast.orderPlaced': 'Order placed',
+  'toast.paymentSubmitted': 'Payment reference submitted',
+  'toast.paymentConfirmed': 'Payment confirmed',
+  'toast.paymentRejected': 'Payment rejected',
+  'toast.lowStock': 'Low stock alert: {name}',
+  'toast.newOrder': 'New online order {orderNumber}',
+  'toast.copied': 'Copied to clipboard',
+
+  // Store state banners
+  'store.closedBanner': 'Store is currently closed for online orders.',
+  'store.suspendedBanner': 'Store unavailable',
+};

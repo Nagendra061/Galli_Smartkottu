@@ -1,0 +1,6 @@
+{
+  "name": "Galli Smartkottu",
+  "description": "QR-code based digital supermarket management platform with Super Admin, Super Market Owner (SMO), and Customer portals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
