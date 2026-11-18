@@ -18,9 +18,15 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "true").lower() in ("1", "true", "yes")
 
 ALLOWED_HOSTS = [
     h.strip()
-    for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0").split(",")
+    for h in os.environ.get(
+        "DJANGO_ALLOWED_HOSTS",
+        os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1,0.0.0.0,.onrender.com,galli-smartkottu.onrender.com"),
+    ).split(",")
     if h.strip()
 ]
+# If wildcard is supplied or allowed
+if "*" in ALLOWED_HOSTS:
+    ALLOWED_HOSTS = ["*"]
 
 # API routes do not require trailing slashes
 APPEND_SLASH = False
@@ -117,9 +123,12 @@ CORS_ALLOWED_ORIGINS = [
     o.strip()
     for o in os.environ.get(
         "CORS_ALLOWED_ORIGINS",
-        "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173",
+        "http://localhost:3000,http://127.0.0.1:3000,http://localhost:5173,https://gallismartkottu.vercel.app",
     ).split(",")
     if o.strip()
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.vercel\.app$",
 ]
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOW_HEADERS = [
