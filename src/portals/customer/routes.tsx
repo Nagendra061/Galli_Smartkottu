@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Grid, Home, ShoppingBag, ShoppingCart, User } from 'lucide-react';
+import { ArrowLeft, Grid, Home, ShoppingBag, ShoppingCart, User } from 'lucide-react';
 import type React from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { NotificationBell } from '../../shared/components/feedback/NotificationBell';
@@ -75,6 +75,16 @@ export function CustomerRoutes() {
       accentStyle={accentStyle}
       topRight={
         <div className="flex items-center gap-1.5">
+          {(user?.role === 'smo' || user?.role === 'staff') && (
+            <button
+              type="button"
+              onClick={() => navigate(ROUTES.OWNER_ACCOUNT)}
+              aria-label="Back to Store Portal"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-accent-soft text-accent-primary hover:bg-accent-primary hover:text-ink-inverse border border-accent-primary/20 transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" /> Back to Store Portal
+            </button>
+          )}
           {user?.role === 'customer' && (
             <NotificationBell onClick={() => navigate(ROUTES.STORE_NOTIFICATIONS.replace(':slug', slug))} />
           )}

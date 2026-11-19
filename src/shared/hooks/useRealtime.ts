@@ -102,9 +102,18 @@ export function useRealtimeSync(onOrderNew?: (payload: RealtimePayload) => void)
 
       socket.onclose = () => {
         if (closedByUnmount) return;
-        const delay = Math.min(10000, 1000 * Math.pow(1.5, attempt));
         attempt += 1;
+        // If connection fails repeatedly (e.g. backend not running or no WebSocket endpoint), stop aggressive reconnect
+        if (attempt > 3) {
+          // Retry every 30 seconds quietly instead of rapid spamming
+          reconnectTimer = window.setTimeout(connect, 30000);
+          return;
+        }
+        const delay = Math.min(10000, 1000 * Math.pow(2, attempt));
         reconnectTimer = window.setTimeout(connect, delay);
+      };
+      socket.onerror = () => {
+        // Suppress unhandled exceptions to avoid cluttering the console
       };
     };
 

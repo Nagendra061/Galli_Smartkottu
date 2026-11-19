@@ -20,6 +20,7 @@ import {
   ShieldAlert,
   Users,
 } from 'lucide-react';
+import QRCode from 'qrcode';
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { QrDisplay } from '../../../../shared/components/data-display/QrDisplay';
@@ -297,9 +298,32 @@ export function SmoAccountPage() {
     return <Skeleton className="h-56 w-full" />;
   }
 
-  const { store, qrDataUrl, plan, usage } = settingsData;
+  const { store, qrDataUrl: serverQrDataUrl, plan, usage } = settingsData;
   const storeUrl = `${window.location.origin}/store/${store.slug}`;
   const isOwner = user?.role === 'smo';
+
+  const [clientQrDataUrl, setClientQrDataUrl] = useState<string>('');
+
+  useEffect(() => {
+    let active = true;
+    const targetUrl = `${storeUrl}?utm_source=qr`;
+    QRCode.toDataURL(targetUrl, {
+      width: 400,
+      margin: 2,
+      errorCorrectionLevel: 'M',
+    })
+      .then((dataUri) => {
+        if (active) setClientQrDataUrl(dataUri);
+      })
+      .catch(() => {
+        // Fallback to server qr
+      });
+    return () => {
+      active = false;
+    };
+  }, [storeUrl]);
+
+  const qrDataUrl = clientQrDataUrl || serverQrDataUrl;
 
   const defaultShareMessage = `Shop online at ${store.name}${store.address ? ` (${store.address})` : ''}! Scan the QR code or tap our store link to browse & order:`;
 
