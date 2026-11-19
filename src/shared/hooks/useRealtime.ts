@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { ENV } from '../config/env';
 import { QUERY_KEYS } from '../config/queryKeys';
 import { useAuth } from './useAuth';
 
