@@ -1012,18 +1012,38 @@ def transition_order_status(
         )
 
     if order.customer_id and actor["role"] != "customer":
-        notify_from_template(
-            recipient_id=order.customer_id,
-            store_id=store_id,
-            notif_type="order.cancelled" if to_status in ("cancelled", "rejected") else "order.status_changed",
-            vars_dict={
-                "orderNumber": order.order_number,
-                "statusLabel": target_meta.label if target_meta else to_status,
-                "reason": reason_clean,
-            },
-            entity_type="order",
-            entity_id=order_id,
-        )
+        # Only two customer notifications for orders:
+        # 1. Store owner accepted the order ("accepted")
+        # 2. Order completed ("completed")
+        # All intermediate updates (preparing, packing, delivery, etc.) appear under Track Order module
+        if to_status == "accepted":
+            notify_from_template(
+                recipient_id=order.customer_id,
+                store_id=store_id,
+                notif_type="order.accepted",
+                vars_dict={
+                    "orderNumber": order.order_number,
+                    "statusLabel": "Accepted",
+                    "title": f"Order {order.order_number} accepted",
+                    "body": "Store owner accepted your order. Track progress in Track Order.",
+                },
+                entity_type="order",
+                entity_id=order_id,
+            )
+        elif to_status == "completed":
+            notify_from_template(
+                recipient_id=order.customer_id,
+                store_id=store_id,
+                notif_type="order.completed",
+                vars_dict={
+                    "orderNumber": order.order_number,
+                    "statusLabel": "Completed",
+                    "title": f"Order {order.order_number} completed",
+                    "body": "Your order has been completed. Thank you for shopping with us!",
+                },
+                entity_type="order",
+                entity_id=order_id,
+            )
 
     for ls in low_stock_alerts:
         notify_store_team(
@@ -1084,15 +1104,6 @@ def mark_order_item_packing(
     elif action == "mark_unavailable":
         item.availability_status = "unavailable_pending"
         item.save(update_fields=["availability_status"])
-        if order.customer_id:
-            notify_from_template(
-                recipient_id=order.customer_id,
-                store_id=store_id,
-                notif_type="order.item_unavailable",
-                vars_dict={"orderNumber": order.order_number, "productName": item.product_name},
-                entity_type="order",
-                entity_id=order_id,
-            )
     elif action == "substitute":
         item.availability_status = "substituted"
         item.substitute_name = (payload.get("substituteName") or "").strip() or "Store substitute"
@@ -1178,9 +1189,11 @@ def switch_order_payment_to_cash(order_id: str, customer_id: str) -> dict[str, A
 
 
 def add_order_message(order_id: str, sender: dict[str, str], body: str) -> dict[str, Any]:
-    order = Order.objects.filter(id=order_id).only("store_id").first()
+    order = Order.objects.filter(id=order_id).only("store_id", "status_code").first()
     if not order:
         raise AppError("NOT_FOUND", "Order not found.", 404)
+    if order.status_code in ("completed", "cancelled", "rejected"):
+        raise AppError("ORDER_CLOSED", "Chat is disabled because this order is completed.", 400)
     clean_body = (body or "").strip()
     if not clean_body:
         raise AppError("VALIDATION_ERROR", "Message cannot be empty.", 400)

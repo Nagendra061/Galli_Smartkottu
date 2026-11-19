@@ -17,7 +17,8 @@ import { CustomerOrderTrackPage } from './orders/pages/CustomerOrderTrackPage';
 import { CustomerAccountPage } from './profile/pages/CustomerAccountPage';
 import { CustomerNotificationsPage } from './profile/pages/CustomerNotificationsPage';
 import { customerApi } from './services/customerApi';
-import { CustomerStorePage } from './store/pages/CustomerStorePage';
+import { CustomerBrowsePage } from './store/pages/CustomerBrowsePage';
+import { CustomerHomePage } from './store/pages/CustomerHomePage';
 
 export function CustomerRoutes() {
   const { slug = '' } = useParams();
@@ -105,10 +106,10 @@ export function CustomerRoutes() {
       }
     >
       <Routes>
-        <Route index element={<CustomerStorePage />} />
-        <Route path="categories" element={<CustomerStorePage />} />
-        <Route path="products" element={<CustomerStorePage />} />
-        <Route path="products/:productId" element={<CustomerStorePage />} />
+        <Route index element={<CustomerHomePage />} />
+        <Route path="categories" element={<CustomerBrowsePage />} />
+        <Route path="products" element={<CustomerBrowsePage />} />
+        <Route path="products/:productId" element={<CustomerBrowsePage />} />
         <Route path="cart" element={<CustomerCartPage />} />
         <Route path="checkout" element={<CustomerCheckoutPage />} />
         <Route path="orders" element={<CustomerOrdersPage />} />

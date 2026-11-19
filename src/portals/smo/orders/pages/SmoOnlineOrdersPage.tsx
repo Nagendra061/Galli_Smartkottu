@@ -405,6 +405,30 @@ export function SmoOnlineOrdersPage() {
                   </div>
                 )}
 
+                {/* Customer Messages under Order */}
+                {order.messages && order.messages.length > 0 && (
+                  <div
+                    onClick={() => setSelectedOrderId(order.id)}
+                    className="rounded-lg border border-border-default bg-surface-subtle/80 p-2.5 space-y-1.5 cursor-pointer hover:bg-surface-subtle transition-colors"
+                  >
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-ink-primary inline-flex items-center gap-1.5">
+                        <MessageSquare className="h-3.5 w-3.5 text-accent-primary" />
+                        Customer Chat ({order.messages.length})
+                      </span>
+                      <span className="text-[11px] text-accent-primary font-medium hover:underline">
+                        Reply under order →
+                      </span>
+                    </div>
+                    <div className="text-xs text-ink-secondary truncate">
+                      <span className="font-medium text-ink-primary">
+                        {order.messages[order.messages.length - 1].senderName}:
+                      </span>{' '}
+                      "{order.messages[order.messages.length - 1].body}"
+                    </div>
+                  </div>
+                )}
+
                 {/* Quick Items Summary & Actions */}
                 <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-default">
                   <div className="text-xs text-ink-secondary">
@@ -570,23 +594,31 @@ export function SmoOnlineOrdersPage() {
                   ))
                 )}
               </div>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!messageText.trim()) return;
-                  messageMutation.mutate({ orderId: selectedOrder.id, body: messageText.trim() });
-                }}
-                className="flex gap-2"
-              >
-                <TextInput
-                  value={messageText}
-                  onChange={(e) => setMessageText(e.target.value)}
-                  placeholder="Send message to customer..."
-                />
-                <Button type="submit" isLoading={messageMutation.isPending}>
-                  <Send className="h-4 w-4" />
-                </Button>
-              </form>
+              {selectedOrder.statusCode === 'completed' ||
+              selectedOrder.statusCode === 'cancelled' ||
+              selectedOrder.statusCode === 'rejected' ? (
+                <div className="rounded-lg bg-surface-subtle p-3 text-center text-xs text-ink-muted">
+                  Chat is disabled because this order is {selectedOrder.statusCode}.
+                </div>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (!messageText.trim()) return;
+                    messageMutation.mutate({ orderId: selectedOrder.id, body: messageText.trim() });
+                  }}
+                  className="flex gap-2"
+                >
+                  <TextInput
+                    value={messageText}
+                    onChange={(e) => setMessageText(e.target.value)}
+                    placeholder="Send message to customer..."
+                  />
+                  <Button type="submit" isLoading={messageMutation.isPending}>
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </form>
+              )}
             </div>
 
             {/* Timeline */}
