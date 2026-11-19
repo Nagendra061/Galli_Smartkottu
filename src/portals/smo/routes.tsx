@@ -9,6 +9,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { RequireRole } from '../../app/RouteGuards';
 import { NotificationBell } from '../../shared/components/feedback/NotificationBell';
 import { AppShell, type NavDestination } from '../../shared/components/layout/AppShell';
+import { BrandLogo } from '../../shared/components/ui/BrandLogo';
 import { NotFoundPage } from '../../shared/components/layout/ErrorPages';
 import { ROUTES } from '../../shared/config/routes';
 import { useAuth } from '../../shared/hooks/useAuth';
@@ -78,7 +79,8 @@ function SmoShellLayout() {
 
   return (
     <AppShell
-      brandTitle={config?.appSettings.appName || ''}
+      brandTitle={config?.appSettings.appName || 'Galli Smartkottu'}
+      brandLogo={<BrandLogo size="md" />}
       brandLink={ROUTES.OWNER_ORDERS_POS}
       navItems={navItems}
       offlineQueueCount={offlineQueueCount}

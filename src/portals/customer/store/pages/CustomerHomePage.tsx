@@ -31,6 +31,7 @@ import { useBootstrapConfig } from '../../../../shared/hooks/useBootstrapConfig'
 import { useI18n } from '../../../../shared/i18n/I18nContext';
 import type { OrderRecord, Product } from '../../../../shared/types';
 import { CustomerFloatingCartBar } from '../../components/CustomerFloatingCartBar';
+import { BrandLogo } from '../../../../shared/components/ui/BrandLogo';
 import { useCustomerCart } from '../../hooks/useCustomerCart';
 import { customerApi } from '../../services/customerApi';
 
@@ -499,6 +500,12 @@ export function CustomerHomePage() {
           </div>
         </div>
       </Card>
+
+      {/* Powered by Brand Footer */}
+      <div className="pt-2 text-center text-xs text-ink-muted flex flex-col items-center justify-center gap-1.5 opacity-80">
+        <span className="text-[11px] font-medium tracking-wide">Powered by</span>
+        <BrandLogo size="sm" />
+      </div>
 
       {/* Floating Cart Bar - Above Floating Navbar */}
       <CustomerFloatingCartBar slug={slug} />
