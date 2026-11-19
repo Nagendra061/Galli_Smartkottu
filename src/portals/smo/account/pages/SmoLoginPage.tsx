@@ -8,6 +8,7 @@ import { FormField } from '../../../../shared/components/forms/FormField';
 import { PasswordInput } from '../../../../shared/components/forms/PasswordInput';
 import { TextInput } from '../../../../shared/components/forms/TextInput';
 import { Button } from '../../../../shared/components/ui/Button';
+import { BrandLogo } from '../../../../shared/components/ui/BrandLogo';
 import { Card } from '../../../../shared/components/ui/Card';
 import { ROUTES, STORAGE_KEYS } from '../../../../shared/config/routes';
 import { useAuth } from '../../../../shared/hooks/useAuth';
@@ -50,10 +51,8 @@ export function SmoLoginPage() {
   return (
     <div className="min-h-screen bg-surface-canvas flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md space-y-4">
-        <div className="text-center space-y-1">
-          <h1 className="font-display text-2xl font-bold text-ink-primary">
-            {config?.appSettings.appName || ''} — Store Portal
-          </h1>
+        <div className="text-center space-y-2 flex flex-col items-center">
+          <BrandLogo size="lg" badge="Store Portal" />
           <p className="text-sm text-ink-secondary">Sign in as Store Owner or Staff</p>
         </div>
 

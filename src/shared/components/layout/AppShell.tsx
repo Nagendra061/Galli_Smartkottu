@@ -13,6 +13,7 @@ export interface NavDestination {
 export function AppShell({
   brandTitle,
   brandLink,
+  brandLogo,
   navItems,
   topRight,
   offlineQueueCount = 0,
@@ -23,6 +24,7 @@ export function AppShell({
 }: {
   brandTitle: string;
   brandLink: string;
+  brandLogo?: React.ReactNode;
   navItems: NavDestination[];
   topRight?: React.ReactNode;
   offlineQueueCount?: number;
@@ -52,9 +54,16 @@ export function AppShell({
             <div className="h-14 px-4 flex items-center border-b border-border-default">
               <Link
                 to={brandLink}
-                className="font-display text-base font-bold tracking-tight text-ink-primary truncate"
+                className="flex items-center min-w-0"
+                aria-label={brandTitle}
               >
-                {brandTitle}
+                {brandLogo ? (
+                  brandLogo
+                ) : (
+                  <span className="font-display text-base font-bold tracking-tight text-ink-primary truncate">
+                    {brandTitle}
+                  </span>
+                )}
               </Link>
             </div>
             <nav className="flex-1 overflow-y-auto p-3 space-y-1" aria-label="Primary navigation">
@@ -84,9 +93,16 @@ export function AppShell({
           <header className="sticky top-0 z-[var(--z-sticky)] h-14 bg-surface-card/95 backdrop-blur-sm border-b border-border-default px-4 flex items-center justify-between gap-4">
             <Link
               to={brandLink}
-              className="md:hidden font-display text-base font-bold tracking-tight text-ink-primary truncate"
+              className="md:hidden flex items-center min-w-0"
+              aria-label={brandTitle}
             >
-              {brandTitle}
+              {brandLogo ? (
+                brandLogo
+              ) : (
+                <span className="font-display text-base font-bold tracking-tight text-ink-primary truncate">
+                  {brandTitle}
+                </span>
+              )}
             </Link>
             <div className="hidden md:block text-sm font-medium text-ink-secondary truncate">
               {navItems.find((i) => isActive(i))?.label || brandTitle}

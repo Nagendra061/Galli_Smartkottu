@@ -16,6 +16,7 @@ import { RequireRole } from '../../app/RouteGuards';
 import { NotificationBell } from '../../shared/components/feedback/NotificationBell';
 import { AppShell, type NavDestination } from '../../shared/components/layout/AppShell';
 import { NotFoundPage } from '../../shared/components/layout/ErrorPages';
+import { BrandLogo } from '../../shared/components/ui/BrandLogo';
 import { Button } from '../../shared/components/ui/Button';
 import { ROUTES } from '../../shared/config/routes';
 import { useAuth } from '../../shared/hooks/useAuth';
@@ -54,7 +55,8 @@ function AdminLayout() {
 
   return (
     <AppShell
-      brandTitle={`${config?.appSettings.appName || ''} Admin`}
+      brandTitle={`${config?.appSettings.appName || 'Galli Smartkottu'} Admin`}
+      brandLogo={<BrandLogo size="md" badge="Admin" />}
       brandLink={ROUTES.ADMIN_ROOT}
       navItems={navItems}
       topRight={
