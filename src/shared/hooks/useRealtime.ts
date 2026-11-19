@@ -23,8 +23,29 @@ export function useRealtimeSync(onOrderNew?: (payload: RealtimePayload) => void)
 
     const connect = () => {
       if (closedByUnmount) return;
-      const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      socket = new WebSocket(`${proto}//${window.location.host}/ws`);
+
+      let wsUrl = '';
+      if (ENV.WS_URL) {
+        wsUrl = ENV.WS_URL;
+      } else if (ENV.API_BASE_URL.startsWith('http')) {
+        try {
+          const parsed = new URL(ENV.API_BASE_URL);
+          const proto = parsed.protocol === 'https:' ? 'wss:' : 'ws:';
+          wsUrl = `${proto}//${parsed.host}/ws`;
+        } catch {
+          const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+          wsUrl = `${proto}//${window.location.host}/ws`;
+        }
+      } else {
+        const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        wsUrl = `${proto}//${window.location.host}/ws`;
+      }
+
+      try {
+        socket = new WebSocket(wsUrl);
+      } catch {
+        return;
+      }
 
       socket.onopen = () => {
         attempt = 0;
