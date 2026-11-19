@@ -18,6 +18,7 @@ import { useAuth } from '../../../../shared/hooks/useAuth';
 import { useBootstrapConfig } from '../../../../shared/hooks/useBootstrapConfig';
 import { useI18n } from '../../../../shared/i18n/I18nContext';
 import type { Product } from '../../../../shared/types';
+import { CustomerFloatingCartBar } from '../../components/CustomerFloatingCartBar';
 import { useCustomerCart } from '../../hooks/useCustomerCart';
 import { customerApi } from '../../services/customerApi';
 
@@ -140,7 +141,7 @@ export function CustomerStorePage() {
   const cartQtyMap = new Map(cart.items.map((i) => [i.productId, i.qty]));
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 pb-28 md:pb-12">
       {/* Store Header Banner */}
       <Card padding="md" className="space-y-2.5">
         <div className="flex flex-wrap items-start justify-between gap-3">
@@ -391,25 +392,8 @@ export function CustomerStorePage() {
         </div>
       )}
 
-      {/* Sticky Floating Cart CTA */}
-      {cart.items.length > 0 && (
-        <div className="sticky bottom-20 md:bottom-4 z-20">
-          <Button
-            fullWidth
-            size="lg"
-            onClick={() => navigate(ROUTES.STORE_CART.replace(':slug', slug))}
-            className="justify-between shadow-lg"
-          >
-            <span className="inline-flex items-center gap-2">
-              <ShoppingCart className="h-4 w-4" />
-              {cart.items.length} item(s) in cart
-            </span>
-            <span>
-              <PriceText amountPaise={cart.subtotalPaise} /> · View Cart
-            </span>
-          </Button>
-        </div>
-      )}
+      {/* Floating Cart Bar - Above Floating Navbar */}
+      <CustomerFloatingCartBar slug={slug} />
 
       {/* Product Detail Modal */}
       <Modal

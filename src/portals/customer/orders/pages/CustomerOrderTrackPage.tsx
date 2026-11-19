@@ -333,23 +333,29 @@ export function CustomerOrderTrackPage() {
             ))
           )}
         </div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!messageBody.trim()) return;
-            messageMutation.mutate();
-          }}
-          className="flex gap-2"
-        >
-          <TextInput
-            value={messageBody}
-            onChange={(e) => setMessageBody(e.target.value)}
-            placeholder="Ask about delivery or items..."
-          />
-          <Button type="submit" isLoading={messageMutation.isPending}>
-            <Send className="h-4 w-4" />
-          </Button>
-        </form>
+        {order.statusCode === 'completed' || order.statusCode === 'cancelled' || order.statusCode === 'rejected' ? (
+          <div className="rounded-lg bg-surface-subtle p-3 text-center text-xs text-ink-muted">
+            Chat is disabled because this order is {order.statusCode}.
+          </div>
+        ) : (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!messageBody.trim()) return;
+              messageMutation.mutate();
+            }}
+            className="flex gap-2"
+          >
+            <TextInput
+              value={messageBody}
+              onChange={(e) => setMessageBody(e.target.value)}
+              placeholder="Ask about delivery or items..."
+            />
+            <Button type="submit" isLoading={messageMutation.isPending}>
+              <Send className="h-4 w-4" />
+            </Button>
+          </form>
+        )}
       </Card>
 
       {/* Rating after completion */}
